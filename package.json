@@ -1,0 +1,53 @@
+{
+  "name": "bluecore-url-utils",
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=5.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TriggerMail/url-utils.git"
+  },
+  "author": "Pavel Vlasov <freakycue@gmail.com>",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "dependencies": {
+    "page": "^1.6.4",
+    "query-string": "^3.0.0",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "coffee-jshint": "^0.2.3",
+    "coffee-loader": "^0.7.2",
+    "coffee-script": "^1.9.3",
+    "coffeelint": "^1.14.1",
+    "jest-cli": "^0.8.0",
+    "pre-commit": "^1.1.1",
+    "webpack": "^1.12.9"
+  },
+  "scripts": {
+    "build": "./node_modules/webpack/bin/webpack.js --progress --colors",
+    "prepublish": "npm run build",
+    "test": "./node_modules/jest-cli/bin/jest.js",
+    "lint": "find . -type f -path 'lib/**/*.coffee' | xargs ./node_modules/coffeelint/bin/coffeelint",
+    "jshint": "find . -type f -path 'lib/**/*.coffee' | sh jshint.sh",
+    "jshint-pre-commit": "git diff --staged --name-only --diff-filter=ACM | sh jshint.sh",
+    "lint-pre-commit": "git diff --staged --name-only --diff-filter=ACM | grep -i '**/*.coffee' | xargs ./node_modules/coffeelint/bin/coffeelint",
+    "watch": "./node_modules/webpack/bin/webpack.js -d --progress --colors --watch"
+  },
+  "jest": {
+    "scriptPreprocessor": "./jest-preprocessor.js",
+    "testFileExtensions": [
+      "coffee"
+    ],
+    "moduleFileExtensions": [
+      "coffee",
+      "js"
+    ]
+  },
+  "pre-commit": [
+    "test",
+    "jshint-pre-commit",
+    "lint-pre-commit"
+  ]
+}
